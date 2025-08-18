@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-hello
+  labels:
+    app: spring-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-hello
+  template:
+    metadata:
+      labels:
+        app: spring-hello
+    spec:
+      containers:
+        - name: spring-hello
+          ###image: <your-dockerhub-username>/spring-hello:1.0
+          image: spring-hello:1.0
+          ports:
+            - containerPort: 8080
