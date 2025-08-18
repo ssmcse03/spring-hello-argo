@@ -8,12 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class Application {
+    private List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "Diana");
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
 
     @GetMapping("/")
     public String hello() {
-        return "Hello World from Spring Boot + Argo CD!";
+        Random random = new Random();
+        String randomName = names.get(random.nextInt(names.size()));
+        return "Hello " + randomName + " from Spring Boot + Argo CD!";    
     }
 }
