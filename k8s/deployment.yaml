@@ -17,6 +17,6 @@ spec:
       containers:
         - name: spring-hello
           ###image: <your-dockerhub-username>/spring-hello:1.0
-          image: spring-hello:2.0
+          image: spring-hello:3.0
           ports:
             - containerPort: 8080

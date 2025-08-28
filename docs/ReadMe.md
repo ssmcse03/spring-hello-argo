@@ -5,6 +5,23 @@
 ---
 
 
+Now Update the 
+modify the code
+craete jar with latest code 
+create image 3.0
+update k8s/deploment.yaml to point new 3.0 version
+
+ cd C:\ado\learning\spring-hello-argo\source\app
+ mvn clean install -DskipTests
+ cd \learning\spring-hello-argo
+ docker build -t spring-hello:3.0 .
+
+
+ kubectl apply -f ./argo-apps/spring-hello-app.yaml -n argocd
+
+---
+
+
 Install the Argo CD on ssm-64-2
 
 kubectl config use-context rancher-desktop

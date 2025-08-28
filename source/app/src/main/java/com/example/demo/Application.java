@@ -13,7 +13,7 @@ import java.util.Random;
 @SpringBootApplication
 @RestController
 public class Application {
-    private List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "Diana");
+    private List<String> names = Arrays.asList("satyendra","Alice", "Bob", "Charlie", "Diana");
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -23,6 +23,6 @@ public class Application {
     public String hello() {
         Random random = new Random();
         String randomName = names.get(random.nextInt(names.size()));
-        return "Hello " + randomName + " from Spring Boot + Argo CD!";    
+        return "Hello " + randomName + "!!!"+" \n Response from Spring Boot + Argo CD!";    
     }
 }
