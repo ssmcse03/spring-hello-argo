@@ -4,6 +4,64 @@
 
 ---
 
+
+Install the Argo CD on ssm-64-2
+
+kubectl config use-context rancher-desktop
+
+kubectl create namespace argocd
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+(optional) kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+
+kubectl get svc argocd-server -n argocd 
+
+NAME            TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE 
+
+argocd-server   NodePort   10.43.135.196   <none>        80:31067/TCP,443:30558/TCP   7m7s 
+
+https://localhost:30558
+
+User - admin
+
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d 
+
+Ht5**********nzM
+
+
+Create the jar
+cd spring-hello-argo\source\app
+mvn clean install
+
+spring-hello-0.0.1-SNAPSHOT.jar create at \spring-hello-argo\source\app\target
+
+Create Image
+cd to \spring-hello-argo where Dockerfile available
+
+docker build -t spring-hello:1.0 .
+
+kubectl apply -f spring-hello-app.yaml -n argocd
+
+using argo-app yaml file
+
+kubectl apply -f ./argo-apps/spring-hello-app.yaml -n argocd
+
+using different namespace
+
+first creat name space
+
+kubectl create namespace spring-hello-demo-1
+
+
+
+PS C:\ado\learning> git clone https://github.com/ssmcse03/spring-hello-argo.git
+
+
+---
+
 ## Create the Argo Application
 
 ```sh
