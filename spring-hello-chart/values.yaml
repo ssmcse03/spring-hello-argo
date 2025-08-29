@@ -135,7 +135,7 @@
 
 image:
   repository: spring-hello
-  tag: "2.0"
+  tag: "3.0"
 service:
   type: NodePort
   port: 8080
