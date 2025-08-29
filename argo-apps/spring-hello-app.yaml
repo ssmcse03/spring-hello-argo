@@ -8,7 +8,13 @@ spec:
   source:
     repoURL: 'https://github.com/ssmcse03/spring-hello-argo.git'
     targetRevision: main
-    path: k8s
+    # path: k8s
+    path: spring-hello-chart
+    chart: spring-hello-chart
+    helm:
+      valueFiles:
+        - values.yaml
+    
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
