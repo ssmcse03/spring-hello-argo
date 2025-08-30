@@ -1,0 +1,18 @@
+#kubectl apply -f .\argo-apps\spring-hello-proj.yaml
+
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: spring-hello-proj
+  namespace: argocd
+spec:
+  description: "Project for hello apps"
+  sourceRepos:
+    - '*'   # or restrict to your repo, e.g. https://github.com/ssmcse03/spring-hello-argo.git
+  destinations:
+   #- namespace: default
+    - namespace: np-dev
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: spring-hello-argocd-project
+  name: spring-hello-argocd-application
   namespace: argocd
 spec:
-  project: default
+  project: spring-hello-proj
   source:
     repoURL: 'https://github.com/ssmcse03/spring-hello-argo.git'
     targetRevision: main
