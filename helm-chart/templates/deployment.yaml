@@ -19,6 +19,9 @@ spec:
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.service.port }}
+          env:
+            - name: SPRING_CONFIG_ADDITIONAL_LOCATION
+              value: /config/overrides.properties
           volumeMounts:
             - name: config-volume
               mountPath: /config

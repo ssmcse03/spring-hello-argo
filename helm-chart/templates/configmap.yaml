@@ -5,5 +5,8 @@ metadata:
 data:
   names.txt: |-
 {{ .Values.configMap.namesTxt | indent 4 }}
-  application.properties: |-
-{{ .Values.configMap.applicationProperties | indent 4 }}
+  overrides.properties: |-
+{{ .Values.configMap.applicationPropertiesOverrides | indent 4 }}
+#   application.properties: |-
+# {{ .Values.configMap.applicationProperties | indent 4 }}
+  

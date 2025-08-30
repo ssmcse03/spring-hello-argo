@@ -14,9 +14,11 @@ configMap:
     Satyndra
     Singh
     India
-  applicationProperties: |
-    #server.port=8081
+  applicationPropertiesOverrides: |
     greeting.message=Hello from ConfigMap!
+  # applicationProperties: |
+  #   #server.port=8081
+  #   greeting.message=Hello from ConfigMap!
 
 ## other resources like serviceAccount, ingress etc that not required at this moment
 ingress:
