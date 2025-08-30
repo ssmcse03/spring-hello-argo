@@ -15,7 +15,7 @@ configMap:
     Singh
     India
   applicationPropertiesOverrides: |
-    greeting.message=Hello from ConfigMap!
+    greeting.message=Hello from (values) ConfigMap !!!
 
 ## other resources like serviceAccount, ingress etc that not required at this moment
 ingress:
