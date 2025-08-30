@@ -10,6 +10,9 @@ spec:
     targetRevision: main
     # path: k8s  //When we use without helm chart and use deployment.yaml, service.yaml files directly
     path: helm-chart
+    helm:
+      valueFiles:
+        - values.yaml
 
     ##ComparisonError Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = error loading repo index: failed to get index: 404 Not Found
     ## Try Solution 1- If you are using a Git repository to store your Helm chart, you should remove the chart field and use the path field to specify the location of the chart in the repository.
