@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-hello-config
+data:
+  names.txt: |
+    Satyndra
+    Singh
+    India
+  application.properties: |
+    #server.port=8081
+    greeting.message=Hello from ConfigMap!

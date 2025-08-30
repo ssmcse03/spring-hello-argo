@@ -1,3 +1,52 @@
+##Application specific values
+image:
+  repository: spring-hello
+  tag: "3.0"
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30080
+replicas: 1
+
+configMap:
+  name: spring-hello-config
+  namesTxt: |
+    Satyndra
+    Singh
+    India
+  applicationProperties: |
+    #server.port=8081
+    greeting.message=Hello from ConfigMap!
+
+## other resources like serviceAccount, ingress etc that not required at this moment
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+serviceAccount:
+  create: false
+  name: ""
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+#   # targetMemoryUtilizationPercentage: 80
+
+## Diable to create testing pod
+test:
+  enabled: false
+
+
+
+
 #####################################
 # Default values for spring-hello-chart.
 # This is a YAML-formatted file.
@@ -124,36 +173,3 @@
 # affinity: {}
 #####################################
 
-image:
-  repository: spring-hello
-  tag: "3.0"
-service:
-  type: NodePort
-  port: 8080
-  nodePort: 30080
-replicas: 1
-
-
-
-ingress:
-  enabled: false
-  annotations: {}
-  hosts:
-    - host: example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-
-serviceAccount:
-  create: false
-  name: ""
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 80
-#   # targetMemoryUtilizationPercentage: 80
-test:
-  enabled: false

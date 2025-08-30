@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name | default "spring-hello-config" }}
+data:
+  names.txt: |-
+{{ .Values.configMap.namesTxt | indent 4 }}
+  application.properties: |-
+{{ .Values.configMap.applicationProperties | indent 4 }}

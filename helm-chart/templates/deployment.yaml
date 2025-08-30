@@ -19,3 +19,23 @@ spec:
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
             - containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+    volumes:
+      - name: config-volume
+        configMap:
+          name: spring-hello-config
+
+######################################
+    #       volumeMounts:
+    #         - name: config-volume
+    #           mountPath: /config
+
+    # volumes:
+    #   - name: config-volume
+    #     configMap:
+    #       name: spring-hello-config
+# You defined a volume named config-volume sourced from the ConfigMap spring-hello-config.
+# You mounted this volume at /config inside the container.
+# The container will have access to all files defined in the ConfigMap at /config.
