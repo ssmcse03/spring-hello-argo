@@ -25,10 +25,10 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /config
-    volumes:
-      - name: config-volume
-        configMap:
-          name: spring-hello-config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: spring-hello-config
 
 ######################################
     #       volumeMounts:
