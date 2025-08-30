@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: spring-hello
+  #namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            namespace: np-dev
+            valueFile: values.yaml
+          - env: qa
+            namespace: np-qa
+            valueFile: values-qa-override.yaml
+  template:
+    metadata:
+      name: spring-hello-{{env}}
+    spec:
+      project: spring-hello-project
+      source:
+        repoURL: 'https://github.com/ssmcse03/spring-hello-argo.git'
+        targetRevision: main
+        path: helm-chart
+        helm:
+          valueFiles:
+            - {{valueFile}}
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: {{namespace}}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
