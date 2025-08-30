@@ -1,8 +1,3 @@
-
-
-
-
-
 #####################################
 # Default values for spring-hello-chart.
 # This is a YAML-formatted file.
@@ -129,10 +124,6 @@
 # affinity: {}
 #####################################
 
-
-
-
-
 image:
   repository: spring-hello
   tag: "3.0"
@@ -154,11 +145,9 @@ ingress:
           pathType: ImplementationSpecific
   tls: []
 
-
 serviceAccount:
   create: false
   name: ""
-
 
 autoscaling:
   enabled: false
@@ -166,6 +155,5 @@ autoscaling:
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
 #   # targetMemoryUtilizationPercentage: 80
-
 test:
   enabled: false

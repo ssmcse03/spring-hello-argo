@@ -1,0 +1,29 @@
+trigger:
+  - main
+
+variables:
+  dockerRegistry: 'ghcr.io/your-username'
+  imageName: 'spring-hello'
+  appVersion: '$(Build.BuildId)'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'source/app/pom.xml'
+      goals: 'package'
+      options: '-DskipTests'
+
+  - task: Docker@2
+    inputs:
+      containerRegistry: '$(dockerRegistry)'
+      repository: '$(imageName)'
+      command: 'buildAndPush'
+      Dockerfile: 'Dockerfile'
+      tags: |
+        $(appVersion)
+
+  - publish: $(System.DefaultWorkingDirectory)/source/app/target/spring-hello-0.0.1-SNAPSHOT.jar
+    artifact: drop

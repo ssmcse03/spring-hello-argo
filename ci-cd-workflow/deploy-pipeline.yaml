@@ -1,0 +1,47 @@
+trigger: none
+
+parameters:
+  - name: env
+    displayName: 'Environment'
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - qa
+      - prod
+  - name: appVersion
+    displayName: 'App Version'
+    type: string
+    default: 'latest'
+  - name: configVersion
+    displayName: 'Config Version'
+    type: string
+    default: 'default'
+  - name: runtimeArg
+    displayName: 'Runtime Argument'
+    type: string
+    default: 'defaultArg'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Deploy
+    jobs:
+      - deployment: DeployJob
+        environment: ${{ parameters.env }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: KubernetesManifest@1
+                  inputs:
+                    action: deploy
+                    manifests: |
+                      k8s/deployment.yaml
+                      k8s/service.yaml
+                    containers: |
+                      ghcr.io/your-username/spring-hello:${{ parameters.appVersion }}
+                    arguments: |
+                      --runtimeArg=${{ parameters.runtimeArg }}
+                - script: echo "Deployed spring-hello:${{ parameters.appVersion }} to ${{ parameters.env }} with config ${{ parameters.configVersion }} and runtimeArg ${{ parameters.runtimeArg }}"

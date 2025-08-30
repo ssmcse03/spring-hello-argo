@@ -1,0 +1,75 @@
+trigger:
+  - main
+
+variables:
+  dockerRegistry: 'ghcr.io/your-username'
+  imageName: 'spring-hello'
+  appVersion: '$(Build.BuildId)'
+  configVersion: 'default'
+  runtimeArg: 'defaultArg'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Maven@3
+            inputs:
+              mavenPomFile: 'source/app/pom.xml'
+              goals: 'package'
+              options: '-DskipTests'
+          - task: Docker@2
+            inputs:
+              containerRegistry: '$(dockerRegistry)'
+              repository: '$(imageName)'
+              command: 'buildAndPush'
+              Dockerfile: 'Dockerfile'
+              tags: |
+                $(appVersion)
+
+  - stage: Deploy
+    jobs:
+      - deployment: Deploy
+        environment: $(env)
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: KubernetesManifest@1
+                  inputs:
+                    action: deploy
+                    manifests: |
+                      k8s/deployment.yaml
+                      k8s/service.yaml
+                    containers: |
+                      $(dockerRegistry)/$(imageName):$(appVersion)
+                    arguments: |
+                      --runtimeArg=$(runtimeArg)
+                - script: echo "Deployed $(imageName):$(appVersion) to $(env) with config $(configVersion) and runtimeArg $(runtimeArg)"
+
+# Manual deployment support
+parameters:
+  - name: env
+    displayName: 'Environment'
+    type: string
+    default: 'dev'
+    values:
+      - dev
+      - qa
+      - prod
+  - name: appVersion
+    displayName: 'App Version'
+    type: string
+    default: 'latest'
+  - name: configVersion
+    displayName: 'Config Version'
+    type: string
+    default: 'default'
+  - name: runtimeArg
+    displayName: 'Runtime Argument'
+    type: string
+    default: 'defaultArg'
